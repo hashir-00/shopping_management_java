@@ -1,0 +1,49 @@
+//console
+
+maximum of 50 products 
+add a product
+ when id is given delete the product and show remaining 
+print all info of a product alphbetically(also type elec or cloth)
+save in a file and read back to the system
+
+
+//gui
+
+dropdown menue (all prod,elec only,cloth only)
+display all details in a table and alphabetically ordered
+select a product and add to cart( items with less than 3 should be in red,
+				selected product details should be in the panel below the table,
+				add to multiple items to the shopping cart(can be visualised by a button available)	
+				shopping cart show final price(initial discount 10% for first
+							    same category 20%)
+
+
+
+
+//table
+ 
+buttons - shopping cart,add to shopping cart
+
+//item display
+
+id	name	category		price	info(elec(brand+warranty),(cloth-color+size)
+
+//panel
+
+id
+category
+name
+size
+color
+items available
+
+
+
+
+cart
+
+product 		quantity		price
+
+total price
+discounts(init,same product type)
+

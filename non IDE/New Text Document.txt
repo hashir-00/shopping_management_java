@@ -1,0 +1,10 @@
+product array[
+
+electronics1   [pid:aaa pname:aaa]
+
+cloth1	[pid:aaa pnam:aaa]
+
+electronics1   [pid:aaa pname:aaa]
+
+
+]
