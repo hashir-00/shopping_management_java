@@ -1,1 +1,0 @@
-product type: Cloth,productId='2', productName='2', stocksAvailable=2, productPrice=2,colour='2', size=2 

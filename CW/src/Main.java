@@ -20,6 +20,7 @@ public class Main implements ShoppingManager {
 
         Scanner scan = new Scanner(System.in);
         boolean x = true;
+        boolean y = true;
         int counter = 0;//items inside the array
         int countAdded = 0;//items added
         String productId, prodcutName, brand, color, type;
@@ -35,23 +36,27 @@ public class Main implements ShoppingManager {
             displayConsole();
 
             System.out.print("\nselect option:");
-            String consoleInput = scan.nextLine();//input
-
+            String consoleInput = scan.next();//input
+            scan.nextLine();// remove the duplication of newline
             if (inputValidator(consoleInput)) {
-                if (Integer.parseInt(consoleInput) == 1) {
+                int option = Integer.parseInt(consoleInput);
+                if (option == 1) {
 
                     if (counter < 50) {
-                        while (x) {
+
+                        while (y) {
 
                             AddProductDisplayConsole();
                             System.out.print("\nselect option:");
-                            consoleInput = scan.nextLine();//input
+                            consoleInput = scan.next();//input
+                            scan.nextLine();//remove the duplication of newline
 
                             if (inputValidator(consoleInput)) {
-                                if (Integer.parseInt(consoleInput) == 1) {
+                                int subOption = Integer.parseInt(consoleInput);
+                                if (subOption == 1) {
 
                                     System.out.println("\nElectronics Products\n");
-                                    System.out.print("Enter productID:");
+                                    System.out.println("Enter productID:");
                                     productId = scan.nextLine();
                                     System.out.println("Enter product name:");
                                     prodcutName = scan.nextLine();
@@ -72,9 +77,9 @@ public class Main implements ShoppingManager {
                                     countAdded++;
                                     productsInSystem.add(electronicsProduct);
                                     EproductsInSystem.add(electronicsProduct);
+                                    System.out.println("Product added successfully");
 
-
-                                } else if (Integer.parseInt(consoleInput) == 2) {
+                                } else if (subOption == 2) {
                                     System.out.println("\nClothing Products\n");
                                     System.out.print("Enter productID:");
                                     productId = scan.nextLine();
@@ -96,14 +101,19 @@ public class Main implements ShoppingManager {
                                     countAdded++;
                                     productsInSystem.add(clothProduct);
                                     CproductsInSystem.add(clothProduct);
+                                    System.out.println("Product added successfully");
 
 
-                                } else if (Integer.parseInt(consoleInput) == 3) {
+                                } else if (subOption == 3) {
 
-                                    break;
-                                } else if (Integer.parseInt(consoleInput) > 3) {
+                                    y = false;
+                                } else if (Integer.parseInt(consoleInput) > 3 || Integer.parseInt(consoleInput) < 1) {
                                     System.out.println("enter a valid input in range");
                                 }
+                            } else {
+                                System.out.println("enter a valid intseger");
+
+
                             }
 
                         }
@@ -115,7 +125,8 @@ public class Main implements ShoppingManager {
                     }
 
 
-                } else if (Integer.parseInt(consoleInput) == 2) {
+                }
+                else if (Integer.parseInt(consoleInput) == 2) {
 
                     if (counter == 0) {
                         System.out.println("no items to remove");
@@ -125,26 +136,25 @@ public class Main implements ShoppingManager {
 
 
                         consoleInput = scan.next();
-                        if (inputValidator(consoleInput) && Integer.parseInt(consoleInput)-1 < productsInSystem.size()) {
-                            Product temp = productsInSystem.get(Integer.parseInt(consoleInput)-1);
-                            System.out.println(temp.getType() +" product with id:"+temp.getProductId()+" removed");
+                        if (inputValidator(consoleInput) && Integer.parseInt(consoleInput) - 1 < productsInSystem.size()) {
+                            Product temp = productsInSystem.get(Integer.parseInt(consoleInput) - 1);
+                            System.out.println(temp.getType() + " product with id:" + temp.getProductId() + " removed");
 
                             productsInSystem.remove(Integer.parseInt(consoleInput) - 1);
 
 
-                        }
-                        else {
+                        } else {
                             System.out.println("enter a valid input");
 
 
                         }
 
 
-
                     }
 
 
-                } else if (Integer.parseInt(consoleInput) == 3) {
+                }
+                else if (Integer.parseInt(consoleInput) == 3) {
                     if (counter == 0) {
                         System.out.println("No Products To show");
                     } else {
@@ -152,7 +162,8 @@ public class Main implements ShoppingManager {
                     }
 
 
-                } else if (Integer.parseInt(consoleInput) == 4) {
+                }
+                else if (Integer.parseInt(consoleInput) == 4) {
                     if (countAdded == 0) {
                         System.out.println("no Products to save");
                     } else {
@@ -160,26 +171,30 @@ public class Main implements ShoppingManager {
                         saveproductsCloths();
                         System.out.println("Successfully saved");
                     }
-                } else if (Integer.parseInt(consoleInput) == 5) {
-
+                }
+                else if (Integer.parseInt(consoleInput) == 5) {
+//open gui
                 } else if ((Integer.parseInt(consoleInput) == 6)) {
                     System.out.println("Exiting");
                     x = false;
 
 
-                } else if (Integer.parseInt(consoleInput) > 6) {
+                }
+                else if (Integer.parseInt(consoleInput) > 6) {
                     System.out.println("Enter a number in the valid range");
 
-                } else {
+                } else
+                {
                     System.out.println("Enter a valid input ");
 
                 }
             } else {
-                System.out.println("enter a valid integccer");
+                System.out.println("enter a valid inteager");
             }
 
 
         }
+
     }
 
 
@@ -234,7 +249,7 @@ public class Main implements ShoppingManager {
 
     }
 
-    public static void loadProducts() {
+    public static void loadProductsElectrnoic() {
 
 
 //            try {
@@ -295,6 +310,9 @@ public class Main implements ShoppingManager {
 //                System.out.println(ex);
 //            }System.out.println("row data loaded successfully");
 
+
+    }
+    public static void loadProductsCloth(){
 
     }
 
