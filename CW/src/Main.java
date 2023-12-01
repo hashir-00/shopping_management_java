@@ -1,38 +1,41 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main implements ShoppingManager {
+
+
+
+    // File paths for electronic and clothing products
+    final static File fileElectronic = new File("productsElectronic.txt");//creating a file
+    final static File fileCloth = new File("productsCLoth.txt");//creating a file
     static ArrayList<Product> productsInSystem = new ArrayList<>();
 
+//array lists to save to the file seperately
     static ArrayList<Product> EproductsInSystem = new ArrayList<>();
     static ArrayList<Product> CproductsInSystem = new ArrayList<>();
 
-
-    static File fileElectronic = new File("productsElectronic.txt");//creating a file
-    static File fileCloth = new File("productsCLoth.txt");//creating a file
-
-
     public static void main(String[] args) {
 
-        Scanner scan = new Scanner(System.in);
-        boolean x = true;
-        boolean y = true;
+        Scanner scan = new Scanner(System.in); //initiate a scanner
+        boolean x = true;//for while loop
+
+
         int counter = 0;//items inside the array
         int countAdded = 0;//items added
         String productId, prodcutName, brand, color, type;
         int size, productPrice, stocksAvailable, warrantyPeriod;
 
-        Electronics ss = new Electronics("elec", "11", "naa", "sds", 12, 122, 21);
-        Clothing sss = new Clothing();
-
+        //load the file data to the arrays
+        loadProductsElectrnoic();
+        loadProductsCloth();
 
         while (x) {
-            for (int i = 0; i < productsInSystem.size(); i++)
-                if (productsInSystem.get(i) != null) counter++;
+            for (int i = 0; i < productsInSystem.size(); i++) {
+                if (productsInSystem.get(i) != null) counter++; //counter to make sure arrays is not exceeding limit
+            }
+
             displayConsole();
 
             System.out.print("\nselect option:");
@@ -43,7 +46,7 @@ public class Main implements ShoppingManager {
                 if (option == 1) {
 
                     if (counter < 50) {
-
+                        boolean y = true;
                         while (y) {
 
                             AddProductDisplayConsole();
@@ -55,6 +58,7 @@ public class Main implements ShoppingManager {
                                 int subOption = Integer.parseInt(consoleInput);
                                 if (subOption == 1) {
 
+
                                     System.out.println("\nElectronics Products\n");
                                     System.out.println("Enter productID:");
                                     productId = scan.nextLine();
@@ -62,6 +66,7 @@ public class Main implements ShoppingManager {
                                     prodcutName = scan.nextLine();
                                     System.out.println("Enter product Brand name:");
                                     brand = scan.nextLine();
+
                                     //
                                     System.out.println("Enter stocks available:");
                                     stocksAvailable = scan.nextInt();
@@ -75,11 +80,15 @@ public class Main implements ShoppingManager {
 
                                     Electronics electronicsProduct = new Electronics(type, productId, prodcutName, brand, stocksAvailable, productPrice, warrantyPeriod);
                                     countAdded++;
-                                    productsInSystem.add(electronicsProduct);
+
                                     EproductsInSystem.add(electronicsProduct);
+
                                     System.out.println("Product added successfully");
 
+
                                 } else if (subOption == 2) {
+
+
                                     System.out.println("\nClothing Products\n");
                                     System.out.print("Enter productID:");
                                     productId = scan.nextLine();
@@ -99,7 +108,7 @@ public class Main implements ShoppingManager {
 
                                     Clothing clothProduct = new Clothing(type, productId, prodcutName, stocksAvailable, productPrice, color, size);
                                     countAdded++;
-                                    productsInSystem.add(clothProduct);
+
                                     CproductsInSystem.add(clothProduct);
                                     System.out.println("Product added successfully");
 
@@ -125,22 +134,31 @@ public class Main implements ShoppingManager {
                     }
 
 
-                }
-                else if (Integer.parseInt(consoleInput) == 2) {
+                } else if (Integer.parseInt(consoleInput) == 2) {
 
                     if (counter == 0) {
                         System.out.println("no items to remove");
                     } else {
                         productList();
-                        System.out.print("\nproduct type to remove");
+                        System.out.print("\nproduct index to remove:");
 
 
                         consoleInput = scan.next();
                         if (inputValidator(consoleInput) && Integer.parseInt(consoleInput) - 1 < productsInSystem.size()) {
                             Product temp = productsInSystem.get(Integer.parseInt(consoleInput) - 1);
-                            System.out.println(temp.getType() + " product with id:" + temp.getProductId() + " removed");
 
-                            productsInSystem.remove(Integer.parseInt(consoleInput) - 1);
+                            System.out.println(temp.getType() + " product with id:" + temp.getProductId() + " removed");
+                            if (temp.getType().equals("Electronic")) {
+                                removeE(temp.toString());//removing it from the file
+                            } else if (temp.getType().equals("Cloth")) {
+                                removeC(temp.toString());
+
+                            } else {
+                                System.out.println("sss");
+                            }
+
+
+                            productsInSystem.remove(Integer.parseInt(consoleInput) - 1);//removing it from the array
 
 
                         } else {
@@ -153,47 +171,45 @@ public class Main implements ShoppingManager {
                     }
 
 
-                }
-                else if (Integer.parseInt(consoleInput) == 3) {
-                    if (counter == 0) {
-                        System.out.println("No Products To show");
+                } else if (Integer.parseInt(consoleInput) == 3) {
+                    if (productsInSystem.size() == 0) {
+                        System.out.println("No products to show");
                     } else {
                         productList();
                     }
 
-
-                }
-                else if (Integer.parseInt(consoleInput) == 4) {
+                } else if (Integer.parseInt(consoleInput) == 4) {
                     if (countAdded == 0) {
                         System.out.println("no Products to save");
                     } else {
+                        countAdded = 0;
+
+
                         saveProductsElectronics();
                         saveproductsCloths();
                         System.out.println("Successfully saved");
                     }
-                }
-                else if (Integer.parseInt(consoleInput) == 5) {
+                } else if (Integer.parseInt(consoleInput) == 5) {
 //open gui
                 } else if ((Integer.parseInt(consoleInput) == 6)) {
                     System.out.println("Exiting");
                     x = false;
 
 
-                }
-                else if (Integer.parseInt(consoleInput) > 6) {
+                } else if (Integer.parseInt(consoleInput) > 6) {
                     System.out.println("Enter a number in the valid range");
 
-                } else
-                {
+                } else {
                     System.out.println("Enter a valid input ");
 
                 }
             } else {
-                System.out.println("enter a valid inteager");
+                System.out.println("enter a valid integer");
             }
 
 
         }
+
 
     }
 
@@ -212,16 +228,24 @@ public class Main implements ShoppingManager {
 
         try {
 
-            FileWriter file_writer = new FileWriter("productsElectronic.txt");//creating the file writer object
-            BufferedWriter bf = new BufferedWriter(file_writer);
-            PrintWriter pw = new PrintWriter(bf);
+            FileWriter file_writer = new FileWriter("productsElectronic.txt", true);//creating the file writer object
+
+            PrintWriter pw = new PrintWriter(file_writer);
+
 
             for (int i = 0; i < EproductsInSystem.size(); i++) {
+                productsInSystem.add(EproductsInSystem.get(i));
                 pw.println(EproductsInSystem.get(i).toString());
+
+
             }
+
+            EproductsInSystem.clear();
 
 
             pw.close();
+
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -232,14 +256,16 @@ public class Main implements ShoppingManager {
     public static void saveproductsCloths() {
         try {
 
-            FileWriter file_writer = new FileWriter("productsCLoth.txt");//creating the file writer object
+            FileWriter file_writer = new FileWriter("productsCLoth.txt", true);//creating the file writer object
             BufferedWriter bf = new BufferedWriter(file_writer);
             PrintWriter pw = new PrintWriter(bf);
 
-            for (int i = 0; i < EproductsInSystem.size(); i++) {
+
+            for (int i = 0; i < CproductsInSystem.size(); i++) {
+                productsInSystem.add(CproductsInSystem.get(i));
                 pw.println(CproductsInSystem.get(i).toString());
             }
-
+            CproductsInSystem.clear();
 
             pw.close();
         } catch (Exception e) {
@@ -251,72 +277,79 @@ public class Main implements ShoppingManager {
 
     public static void loadProductsElectrnoic() {
 
+        try {
+            Scanner sc = new Scanner(fileElectronic);
 
-//            try {
-//
-//                File file = new File("products.txt");//creating a file
-//                Scanner file_reader = new Scanner(file);//creating a scanner object
-//                String  d=null;//using null string to convert the file items to a string
-//
-//                int j=0,l=0,m=0;//initiallizing 3 diff  count var for the for loop ahead
-//                while (file_reader.hasNext()) {
-//                    for (int i=0; file_reader.hasNext();i++){
-//
-//                        d = file_reader.nextLine();//converting file items to a single string
-//                    }
-//
-//
-//                }
-//                file_reader.close();
-//
-//                //assigning seat values to the original char array
-//                //seat values are obtained by removing the unnecessary char's
-//
-//                //row1
-//                for (int i=5; i<17;i++){
-//
-//                    assert d != null;
-//                    row1[j]=d.charAt(i);
-//                    // System.out.print(row1[j]);
-//                    j++;
-//
-//                }
-//
-//
-//                //row2
-//                for (int i=22; i<38;i++){
-//
-//                    row2[l]=d.charAt(i);
-//                    //System.out.print(row2[l]);
-//                    l++;
-//
-//                }
-//
-//
-//                //row3
-//                for (int i=43; i<63;i++){
-//                    row3[m]=d.charAt(i);
-//                    //System.out.print(row3[m]);
-//                    m++;
-//
-//                }
-//
-//
-//                //loop_for(rows);
-//
-//
-//
-//            } catch (IOException ex) {
-//                System.out.println(ex);
-//            }System.out.println("row data loaded successfully");
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] details = line.split(":");
+                String type = details[0];
+                String id = details[1];
+                String name = details[2];
+                String brand = details[3];
+                int stocks = Integer.parseInt(details[4]);
+                int price = Integer.parseInt(details[5]);
+                int period = Integer.parseInt(details[6]);
 
 
+                Electronics p = new Electronics(type, id, name, brand, stocks, price, period);
+
+                productsInSystem.add(p);
+//                productsInSystem.add();
+            }
+
+
+//            for (Product pro : EproductsInSystem) {
+//                System.out.println(pro);
+//
+//
+//            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public static void loadProductsCloth(){
+
+
+    public static void loadProductsCloth() {
+
+        try {
+            Scanner sc = new Scanner(fileCloth);
+
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                String[] details = line.split(":");
+                String type = details[0];
+                String id = details[1];
+                String name = details[2];
+
+                int stocks = Integer.parseInt(details[3]);
+                int price = Integer.parseInt(details[4]);
+                String color = details[5];
+                int size = Integer.parseInt(details[6]);
+
+
+                Clothing p = new Clothing(type, id, name, stocks, price, color, size);
+
+                productsInSystem.add(p);
+            }
+
+
+//            for (Product pro : EproductsInSystem) {
+//                System.out.println(pro);
+//
+//
+//            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
     public static void productList() {
+
 
         for (int i = 0; i < productsInSystem.size(); i++) {
             System.out.println(i + 1 + "-" + productsInSystem.get(i));
@@ -339,8 +372,69 @@ public class Main implements ShoppingManager {
         return isInt;
     }
 
+    public static void removeE(String text) {
+
+
+        try {
+            List<String> lines = new ArrayList<>();
+
+            // Read all lines from the file
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileElectronic))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.equals(text)) {
+                        lines.add(line);
+                    }
+                }
+            }
+
+            // Write the updated lines back to the file
+            try (FileWriter writer = new FileWriter(fileElectronic)) {
+                for (String line : lines) {
+                    writer.write(line + "\n");
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception according to your requirements
+        }
+    }
+
+    public static void removeC(String text) {
+
+
+        try {
+            List<String> lines = new ArrayList<>();
+
+            // Read all lines from the file
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileCloth))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.equals(text)) {
+                        lines.add(line);
+                    }
+                }
+            }
+
+            // Write the updated lines back to the file
+            try (FileWriter writer = new FileWriter(fileCloth)) {
+                for (String line : lines) {
+                    writer.write(line + "\n");
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle the exception according to your requirements
+        }
+    }
+
 
 }
+
+
+
 
 
 

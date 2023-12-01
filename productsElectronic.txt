@@ -1,2 +1,0 @@
-product type= Electronic,productId='1', productName='1', stocksAvailable=1, productPrice=1,brand='1', warrantyPeriod_months=1
-product type= Electronic,productId='2', productName='2', stocksAvailable=2, productPrice=2,brand='2', warrantyPeriod_months=2

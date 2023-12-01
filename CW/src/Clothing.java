@@ -33,8 +33,8 @@ public class Clothing extends Product {
     @Override
     public String toString() {
         return super.toString() +
-                ",colour='" + colour + '\'' +
-                ", size=" + size + " "
+                ":" + colour +":"
+                + size
                 ;
     }
 }
