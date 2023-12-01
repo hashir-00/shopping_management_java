@@ -286,9 +286,9 @@ public class Main implements ShoppingManager {
                 String type = details[0];
                 String id = details[1];
                 String name = details[2];
-                String brand = details[3];
-                int stocks = Integer.parseInt(details[4]);
-                int price = Integer.parseInt(details[5]);
+                int stocks = Integer.parseInt(details[3]);
+                int price = Integer.parseInt(details[4]);
+                String brand = details[5];
                 int period = Integer.parseInt(details[6]);
 
 
@@ -349,7 +349,6 @@ public class Main implements ShoppingManager {
     }
 
     public static void productList() {
-
 
         for (int i = 0; i < productsInSystem.size(); i++) {
             System.out.println(i + 1 + "-" + productsInSystem.get(i));

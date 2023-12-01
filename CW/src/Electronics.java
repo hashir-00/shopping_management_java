@@ -41,4 +41,6 @@ public class Electronics extends Product implements Serializable {
                 ":"+ brand +
                 ":"+warrantyPeriod_months ;
     }
-}
+
+    }
+
