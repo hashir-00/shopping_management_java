@@ -5,21 +5,21 @@ import java.util.Scanner;
 
 public class Main implements ShoppingManager {
 
-
+//fix the integer validation
 
     // File paths for electronic and clothing products
     final static File fileElectronic = new File("productsElectronic.txt");//creating a file
     final static File fileCloth = new File("productsCLoth.txt");//creating a file
     static ArrayList<Product> productsInSystem = new ArrayList<>();
 
-//array lists to save to the file seperately
+    //array lists to save to the file seperately
     static ArrayList<Product> EproductsInSystem = new ArrayList<>();
     static ArrayList<Product> CproductsInSystem = new ArrayList<>();
 
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in); //initiate a scanner
-        boolean x = true;//for while loop
+        boolean x =true,z= true;//for while loop
 
 
         int counter = 0;//items inside the array
@@ -31,184 +31,207 @@ public class Main implements ShoppingManager {
         loadProductsElectrnoic();
         loadProductsCloth();
 
-        while (x) {
-            for (int i = 0; i < productsInSystem.size(); i++) {
-                if (productsInSystem.get(i) != null) counter++; //counter to make sure arrays is not exceeding limit
-            }
 
-            displayConsole();
+        System.out.println("welcome,\n1.User\n2.Manager");
+        String input= scan.nextLine();
 
-            System.out.print("\nselect option:");
-            String consoleInput = scan.next();//input
-            scan.nextLine();// remove the duplication of newline
-            if (inputValidator(consoleInput)) {
-                int option = Integer.parseInt(consoleInput);
-                if (option == 1) {
+        while(z) {
+            if (inputValidator(input)) {
+                if (Integer.parseInt(input) == 1) {
+                    //open console
+                } else if (Integer.parseInt(input) == 2) {
+                    while (x) {
+                        for (int i = 0; i < productsInSystem.size(); i++) {
+                            if (productsInSystem.get(i) != null)
+                                counter++; //counter to make sure arrays is not exceeding limit
+                        }
 
-                    if (counter < 50) {
-                        boolean y = true;
-                        while (y) {
+                        displayConsole();
 
-                            AddProductDisplayConsole();
-                            System.out.print("\nselect option:");
-                            consoleInput = scan.next();//input
-                            scan.nextLine();//remove the duplication of newline
+                        System.out.print("\nselect option:");
+                        String consoleInput = scan.next();//input
+                        scan.nextLine();// remove the duplication of newline
+                        if (inputValidator(consoleInput)) {
+                            int option = Integer.parseInt(consoleInput);
+                            if (option == 1) {
 
-                            if (inputValidator(consoleInput)) {
-                                int subOption = Integer.parseInt(consoleInput);
-                                if (subOption == 1) {
+                                if (counter < 50) {
+                                    boolean y = true;
+                                    while (y) {
 
+                                        AddProductDisplayConsole();
+                                        System.out.print("\nselect option:");
+                                        consoleInput = scan.next();//input
+                                        scan.nextLine();//remove the duplication of newline
 
-                                    System.out.println("\nElectronics Products\n");
-                                    System.out.println("Enter productID:");
-                                    productId = scan.nextLine();
-                                    System.out.println("Enter product name:");
-                                    prodcutName = scan.nextLine();
-                                    System.out.println("Enter product Brand name:");
-                                    brand = scan.nextLine();
-
-                                    //
-                                    System.out.println("Enter stocks available:");
-                                    stocksAvailable = scan.nextInt();
-                                    System.out.println("Enter product price:");
-                                    productPrice = scan.nextInt();
-                                    System.out.println("Enter product warrantyPeriod(weeks):");
-                                    warrantyPeriod = scan.nextInt();
-
-                                    //
-                                    type = "Electronic";
-
-                                    Electronics electronicsProduct = new Electronics(type, productId, prodcutName, brand, stocksAvailable, productPrice, warrantyPeriod);
-                                    countAdded++;
-
-                                    EproductsInSystem.add(electronicsProduct);
-
-                                    System.out.println("Product added successfully");
+                                        if (inputValidator(consoleInput)) {
+                                            int subOption = Integer.parseInt(consoleInput);
+                                            if (subOption == 1) {
 
 
-                                } else if (subOption == 2) {
+                                                System.out.println("\nElectronics Products\n");
+                                                System.out.println("Enter productID:");
+                                                productId = scan.nextLine();
+                                                System.out.println("Enter product name:");
+                                                prodcutName = scan.nextLine();
+                                                System.out.println("Enter product Brand name:");
+                                                brand = scan.nextLine();
+
+                                                //
+                                                System.out.println("Enter stocks available:");
+                                                stocksAvailable = scan.nextInt();
+                                                System.out.println("Enter product price:");
+                                                productPrice = scan.nextInt();
+                                                System.out.println("Enter product warrantyPeriod(weeks):");
+                                                warrantyPeriod = scan.nextInt();
+
+                                                //
+                                                type = "Electronic";
+
+                                                Electronics electronicsProduct = new Electronics(type, productId, prodcutName, brand, stocksAvailable, productPrice, warrantyPeriod);
+                                                countAdded++;
+
+                                                EproductsInSystem.add(electronicsProduct);
+
+                                                System.out.println("Product added successfully");
 
 
-                                    System.out.println("\nClothing Products\n");
-                                    System.out.print("Enter productID:");
-                                    productId = scan.nextLine();
-                                    System.out.println("Enter product name:");
-                                    prodcutName = scan.nextLine();
-                                    System.out.println("Enter product color:");
-                                    color = scan.nextLine();
-                                    //
-                                    System.out.println("Enter product size:");
-                                    size = scan.nextInt();
-                                    System.out.println("Enter stocks available:");
-                                    stocksAvailable = scan.nextInt();
-                                    System.out.println("Enter product price:");
-                                    productPrice = scan.nextInt();
-                                    //
-                                    type = "Cloth";
-
-                                    Clothing clothProduct = new Clothing(type, productId, prodcutName, stocksAvailable, productPrice, color, size);
-                                    countAdded++;
-
-                                    CproductsInSystem.add(clothProduct);
-                                    System.out.println("Product added successfully");
+                                            } else if (subOption == 2) {
 
 
-                                } else if (subOption == 3) {
+                                                System.out.println("\nClothing Products\n");
+                                                System.out.print("Enter productID:");
+                                                productId = scan.nextLine();
+                                                System.out.println("Enter product name:");
+                                                prodcutName = scan.nextLine();
+                                                System.out.println("Enter product color:");
+                                                color = scan.nextLine();
+                                                //
+                                                System.out.println("Enter product size:");
+                                                size = scan.nextInt();
+                                                System.out.println("Enter stocks available:");
+                                                stocksAvailable = scan.nextInt();
+                                                System.out.println("Enter product price:");
+                                                productPrice = scan.nextInt();
+                                                //
+                                                type = "Cloth";
 
-                                    y = false;
-                                } else if (Integer.parseInt(consoleInput) > 3 || Integer.parseInt(consoleInput) < 1) {
-                                    System.out.println("enter a valid input in range");
+                                                Clothing clothProduct = new Clothing(type, productId, prodcutName, stocksAvailable, productPrice, color, size);
+                                                countAdded++;
+
+                                                CproductsInSystem.add(clothProduct);
+                                                System.out.println("Product added successfully");
+
+
+                                            } else if (subOption == 3) {
+
+                                                y = false;
+                                            } else if (Integer.parseInt(consoleInput) > 3 || Integer.parseInt(consoleInput) < 1) {
+                                                System.out.println("enter a valid input in range");
+                                            }
+                                        } else {
+                                            System.out.println("enter a valid intseger");
+
+
+                                        }
+
+                                    }
+
+
+                                } else {
+                                    System.out.println("Sorry,The product Capacity has reached" + "\nRemove an item to proceed");
+
                                 }
-                            } else {
-                                System.out.println("enter a valid intseger");
 
 
-                            }
+                            } else if (Integer.parseInt(consoleInput) == 2) {
 
-                        }
+                                if (counter == 0) {
+                                    System.out.println("no items to remove");
 
-
-                    } else {
-                        System.out.println("Sorry,The product Capacity has reached" + "\nRemove an item to proceed");
-
-                    }
-
-
-                } else if (Integer.parseInt(consoleInput) == 2) {
-
-                    if (counter == 0) {
-                        System.out.println("no items to remove");
-                    } else {
-                        productList();
-                        System.out.print("\nproduct index to remove:");
+                                } else {
+                                    productList();
+                                    System.out.print("\nproduct index to remove:");
 
 
-                        consoleInput = scan.next();
-                        if (inputValidator(consoleInput) && Integer.parseInt(consoleInput) - 1 < productsInSystem.size()) {
-                            Product temp = productsInSystem.get(Integer.parseInt(consoleInput) - 1);
+                                    consoleInput = scan.next();
+                                    if (inputValidator(consoleInput) && Integer.parseInt(consoleInput) - 1 < productsInSystem.size() && Integer.parseInt(consoleInput) != 0) {
+                                        Product temp = productsInSystem.get(Integer.parseInt(consoleInput) - 1);
 
-                            System.out.println(temp.getType() + " product with id:" + temp.getProductId() + " removed");
-                            if (temp.getType().equals("Electronic")) {
-                                removeE(temp.toString());//removing it from the file
-                            } else if (temp.getType().equals("Cloth")) {
-                                removeC(temp.toString());
+                                        System.out.println(temp.getType() + " product with id:" + temp.getProductId() + " removed");
+                                        if (temp.getType().equals("Electronic")) {
+                                            removeE(temp.toString());//removing it from the file
+                                        } else if (temp.getType().equals("Cloth")) {
+                                            removeC(temp.toString());
 
-                            } else {
-                                System.out.println("sss");
-                            }
-
-
-                            productsInSystem.remove(Integer.parseInt(consoleInput) - 1);//removing it from the array
+                                        } else {
+                                            System.out.println("sss");
+                                        }
 
 
-                        } else {
-                            System.out.println("enter a valid input");
+                                        productsInSystem.remove(Integer.parseInt(consoleInput) - 1);//removing it from the array
 
 
-                        }
+                                    } else if (inputValidator(consoleInput) && Integer.parseInt(consoleInput) == 0) {
+                                        System.out.println("please enter a existing value");
+                                    } else {
+                                        System.out.println("enter a valid input");
 
 
-                    }
+                                    }
 
 
-                } else if (Integer.parseInt(consoleInput) == 3) {
-                    if (productsInSystem.size() == 0) {
-                        System.out.println("No products to show");
-                    } else {
-                        productList();
-                    }
-
-                } else if (Integer.parseInt(consoleInput) == 4) {
-                    if (countAdded == 0) {
-                        System.out.println("no Products to save");
-                    } else {
-                        countAdded = 0;
+                                }
 
 
-                        saveProductsElectronics();
-                        saveproductsCloths();
-                        System.out.println("Successfully saved");
-                    }
-                } else if (Integer.parseInt(consoleInput) == 5) {
+                            } else if (Integer.parseInt(consoleInput) == 3) {
+                                if (productsInSystem.size() == 0) {
+                                    System.out.println("No products to show");
+                                } else {
+                                    productList();
+                                }
+
+                            } else if (Integer.parseInt(consoleInput) == 4) {
+                                if (countAdded == 0) {
+                                    System.out.println("no Products to save");
+                                } else {
+                                    countAdded = 0;
+
+
+                                    saveProductsElectronics();
+                                    saveproductsCloths();
+                                    System.out.println("Successfully saved");
+                                }
+                            } else if (Integer.parseInt(consoleInput) == 5) {
 //open gui
-                } else if ((Integer.parseInt(consoleInput) == 6)) {
-                    System.out.println("Exiting");
-                    x = false;
+                            } else if ((Integer.parseInt(consoleInput) == 6)) {
+                                System.out.println("Exiting");
+                                x = false;
+                                z=false;
 
 
-                } else if (Integer.parseInt(consoleInput) > 6) {
-                    System.out.println("Enter a number in the valid range");
+                            } else if (Integer.parseInt(consoleInput) > 6) {
+                                System.out.println("Enter a number in the valid range");
+
+                            } else {
+                                System.out.println("Enter a valid input ");
+
+                            }
+                        } else {
+                            System.out.println("enter a valid integer");
+                        }
+
+
+                    }
 
                 } else {
-                    System.out.println("Enter a valid input ");
-
+                    System.out.println("enter a valid statement");
                 }
             } else {
-                System.out.println("enter a valid integer");
+                System.out.println("enter a valid statement");
             }
-
-
         }
+
 
 
     }
@@ -295,15 +318,10 @@ public class Main implements ShoppingManager {
                 Electronics p = new Electronics(type, id, name, brand, stocks, price, period);
 
                 productsInSystem.add(p);
-//                productsInSystem.add();
+
             }
 
 
-//            for (Product pro : EproductsInSystem) {
-//                System.out.println(pro);
-//
-//
-//            }
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -425,15 +443,9 @@ public class Main implements ShoppingManager {
 
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception according to your requirements
+
         }
     }
 
 
 }
-
-
-
-
-
-
