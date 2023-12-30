@@ -41,7 +41,14 @@ public class Main implements ShoppingManager {
             if (inputValidator(input)) {
                 if (Integer.parseInt(input) == 1) {
                     //open console
-
+                    for(int i=0;i<productsInSystem.size();i++){
+                        if(productsInSystem.get(i).type.equals("Cloth")){
+                            CproductsInSystem.add(productsInSystem.get(i));
+                        }
+                        else if(productsInSystem.get(i).type.equals("Electronic")){
+                            EproductsInSystem.add(productsInSystem.get(i));
+                        }
+                    }
                     SwingUtilities.invokeLater(() -> {
                         GUI shoppingGUI = new GUI();
                         shoppingGUI.initializeTable();
@@ -230,7 +237,7 @@ public class Main implements ShoppingManager {
                                             removeC(temp.toString());
 
                                         } else {
-                                            System.out.println("sss");
+                                            System.out.println("no product available");
                                         }
 
 
@@ -384,6 +391,7 @@ public class Main implements ShoppingManager {
 
                 productsInSystem.add(p);
 
+
             }
 
 
@@ -415,14 +423,11 @@ public class Main implements ShoppingManager {
                 Clothing p = new Clothing(type, id, name, stocks, price, color, size);
 
                 productsInSystem.add(p);
+
+
             }
 
 
-//            for (Product pro : EproductsInSystem) {
-//                System.out.println(pro);
-//
-//
-//            }
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

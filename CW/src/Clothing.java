@@ -37,6 +37,9 @@ public class Clothing extends Product {
                 + size
                 ;
     }
+    public String productDetails(){
+        return super.productDetails()+"\nColor: "+getColour()+"\nSize: "+getSize();
+    }
 
 
 

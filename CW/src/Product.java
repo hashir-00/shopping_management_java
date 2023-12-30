@@ -65,7 +65,9 @@ public abstract class Product {
         return type+":"+ productId +":"+  productName+":" +
                   stocksAvailable+":" + productPrice;
     }
-
+    public String productDetails(){
+        return "Type: "+getType()+"\nProduct Name: "+getProductName()+ "\nStocks Available: "+getStocksAvailable()+"\nPrice: "+getProductPrice();
+    }
 
 
 

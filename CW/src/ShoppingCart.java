@@ -1,23 +1,30 @@
 import java.util.ArrayList;
+import java.util.List;
 
-public class ShoppingCart extends Product {
-    private ArrayList<Product> cartList;
+public class ShoppingCart {
+    private List<Product> cartItems;
 
     public ShoppingCart() {
+        cartItems = new ArrayList<>();
     }
 
+    public int calculateTotalPrice() {
+        int totalPrice = 0;
 
-
-    public int calculate_price(ArrayList<Product> cartList){
-        int price=0;
-
-        for(int i=0;i<cartList.size();i++){
-            price=cartList.get(i).getProductPrice()+price;
+        for (Product product : cartItems) {
+            totalPrice += product.getProductPrice();
         }
-        return (price);
+
+        return totalPrice;
     }
 
+    public List<Product> getCartItems() {
+        return cartItems;
+    }
 
     public void addItem(Product selectedProduct) {
+        cartItems.add(selectedProduct);
     }
+
+    // You may need additional methods for removing items, etc.
 }
