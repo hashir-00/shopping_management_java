@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +26,31 @@ public class Main implements ShoppingManager {
         int counter = 0;//items inside the array
         int countAdded = 0;//items added
         String productId, prodcutName, brand, color, type;
-        int size, productPrice, stocksAvailable, warrantyPeriod;
+        String size, productPrice, stocksAvailable, warrantyPeriod;
 
         //load the file data to the arrays
         loadProductsElectrnoic();
         loadProductsCloth();
 
 
-        System.out.println("welcome,\n1.User\n2.Manager");
-        String input= scan.nextLine();
+
 
         while(z) {
+            System.out.println("welcome,\n1.User\n2.Manager");
+            String input= scan.nextLine();
             if (inputValidator(input)) {
                 if (Integer.parseInt(input) == 1) {
                     //open console
+
+                    SwingUtilities.invokeLater(() -> {
+                        GUI shoppingGUI = new GUI();
+                        shoppingGUI.initializeTable();
+                        shoppingGUI.updateDisplayedProducts();
+                        shoppingGUI.updateTable(); // Initialize table with data
+                        shoppingGUI.setVisible(true);
+                    });
+
+                    break;
                 } else if (Integer.parseInt(input) == 2) {
                     while (x) {
                         for (int i = 0; i < productsInSystem.size(); i++) {
@@ -55,10 +67,12 @@ public class Main implements ShoppingManager {
                             int option = Integer.parseInt(consoleInput);
                             if (option == 1) {
 
+
                                 if (counter < 50) {
                                     boolean y = true;
-                                    while (y) {
 
+                                    while (y) {
+                                        boolean m=true,n=true,l=true;
                                         AddProductDisplayConsole();
                                         System.out.print("\nselect option:");
                                         consoleInput = scan.next();//input
@@ -77,23 +91,52 @@ public class Main implements ShoppingManager {
                                                 System.out.println("Enter product Brand name:");
                                                 brand = scan.nextLine();
 
-                                                //
-                                                System.out.println("Enter stocks available:");
-                                                stocksAvailable = scan.nextInt();
-                                                System.out.println("Enter product price:");
-                                                productPrice = scan.nextInt();
-                                                System.out.println("Enter product warrantyPeriod(weeks):");
-                                                warrantyPeriod = scan.nextInt();
+                        while (m) {
+                          System.out.println("Enter stocks available:");
+                          stocksAvailable = scan.nextLine();
+                          if (inputValidator(stocksAvailable)) {
+                            while (n) {
+                              System.out.println("Enter product price:");
+                              productPrice = scan.nextLine();
+                                if (inputValidator(productPrice)) {
+                                    while (l) {
+                                    System.out.println("Enter product warrantyPeriod(weeks):");
+                                    warrantyPeriod = scan.nextLine();
+                                    if (inputValidator(warrantyPeriod)){      //
+                                        type = "Electronic";
 
-                                                //
-                                                type = "Electronic";
+                                        Electronics electronicsProduct =
+                                                new Electronics(
+                                                        type,
+                                                        productId,
+                                                        prodcutName,
+                                                        brand,
+                                                        Integer.parseInt(stocksAvailable),
+                                                        Integer.parseInt(productPrice),
+                                                        Integer.parseInt(warrantyPeriod));
+                                        countAdded++;
 
-                                                Electronics electronicsProduct = new Electronics(type, productId, prodcutName, brand, stocksAvailable, productPrice, warrantyPeriod);
-                                                countAdded++;
+                                        EproductsInSystem.add(electronicsProduct);
 
-                                                EproductsInSystem.add(electronicsProduct);
+                                        System.out.println("Product added successfully");
+                                        m=n=l=false;
+                                    }
 
-                                                System.out.println("Product added successfully");
+                                    else { System.out.println("enter a valid input");}
+
+                                }}
+                                else { System.out.println("enter a valid input");}
+
+                            }
+                            //
+                          } else {
+                            System.out.println("enter a valid input");
+                          }
+                 }
+
+
+
+
 
 
                                             } else if (subOption == 2) {
@@ -106,21 +149,43 @@ public class Main implements ShoppingManager {
                                                 prodcutName = scan.nextLine();
                                                 System.out.println("Enter product color:");
                                                 color = scan.nextLine();
-                                                //
-                                                System.out.println("Enter product size:");
-                                                size = scan.nextInt();
-                                                System.out.println("Enter stocks available:");
-                                                stocksAvailable = scan.nextInt();
-                                                System.out.println("Enter product price:");
-                                                productPrice = scan.nextInt();
-                                                //
-                                                type = "Cloth";
+                                                while (m) {
+                                                    System.out.println("Enter stocks available:");
+                                                    stocksAvailable = scan.nextLine();
+                                                    if (inputValidator(stocksAvailable)) {
+                                                        while (n) {
+                                                            System.out.println("Enter product price:");
+                                                            productPrice = scan.nextLine();
+                                                            if (inputValidator(productPrice)) {
+                                                                while (l) {
+                                                                    System.out.println("Enter product Size:");
+                                                                   size = scan.nextLine();
+                                                                    if (inputValidator(size)){      //
+                                                                        type = "Cloth";
 
-                                                Clothing clothProduct = new Clothing(type, productId, prodcutName, stocksAvailable, productPrice, color, size);
-                                                countAdded++;
+                                                                        Clothing clothProduct = new Clothing(type, productId, prodcutName,  Integer.parseInt(stocksAvailable),
+                                                                                Integer.parseInt(productPrice),
+                                                                                color, Integer.parseInt(size));
+                                                                        countAdded++;
 
-                                                CproductsInSystem.add(clothProduct);
-                                                System.out.println("Product added successfully");
+                                                                        CproductsInSystem.add(clothProduct);
+                                                                        System.out.println("Product added successfully");
+                                                                        m=n=l=false;
+                                                                    }
+
+                                                                    else { System.out.println("enter a valid input");}
+
+                                                                }}
+                                                            else { System.out.println("enter a valid input");}
+
+                                                        }
+                                                        //
+                                                    } else {
+                                                        System.out.println("enter a valid input");
+                                                    }
+                                                }
+
+
 
 
                                             } else if (subOption == 3) {
@@ -225,10 +290,10 @@ public class Main implements ShoppingManager {
                     }
 
                 } else {
-                    System.out.println("enter a valid statement");
+                    System.out.println("enter a valid range");
                 }
             } else {
-                System.out.println("enter a valid statement");
+                System.out.println("enter a valid Integer input");
             }
         }
 

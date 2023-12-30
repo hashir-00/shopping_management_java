@@ -18,4 +18,6 @@ public class ShoppingCart extends Product {
     }
 
 
+    public void addItem(Product selectedProduct) {
+    }
 }
