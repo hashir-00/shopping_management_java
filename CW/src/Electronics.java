@@ -42,8 +42,18 @@ public class Electronics extends Product implements Serializable {
                 ":"+warrantyPeriod_months ;
     }
     public String productDetails(){
-        return super.productDetails()+"\nBrand: "+getBrand()+"\nWarranty: "+getWarrantyPeriod_months();
+    return super.productDetails()
+        + "\n\nBrand: "
+        + getBrand()
+        + "\n\nWarranty: "
+        + getWarrantyPeriod_months()
+        + " months";
     }
-
+    public String GUIinfo(){
+        return getBrand()+" "+getWarrantyPeriod_months()+": months warranty";
+    }
+    public String cartGUIinfo(){
+        return getProductId()+",\n"+getProductName()+",\n"+getBrand();
+    }
     }
 

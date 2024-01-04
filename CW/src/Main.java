@@ -58,7 +58,8 @@ public class Main implements ShoppingManager {
                     });
 
                     break;
-                } else if (Integer.parseInt(input) == 2) {
+                }
+                else if (Integer.parseInt(input) == 2) {
                     while (x) {
                         for (int i = 0; i < productsInSystem.size(); i++) {
                             if (productsInSystem.get(i) != null)
@@ -216,7 +217,8 @@ public class Main implements ShoppingManager {
                                 }
 
 
-                            } else if (Integer.parseInt(consoleInput) == 2) {
+                            }
+                            else if (Integer.parseInt(consoleInput) == 2) {
 
                                 if (counter == 0) {
                                     System.out.println("no items to remove");
@@ -256,14 +258,16 @@ public class Main implements ShoppingManager {
                                 }
 
 
-                            } else if (Integer.parseInt(consoleInput) == 3) {
+                            }
+                            else if (Integer.parseInt(consoleInput) == 3) {
                                 if (productsInSystem.size() == 0) {
                                     System.out.println("No products to show");
                                 } else {
                                     productList();
                                 }
 
-                            } else if (Integer.parseInt(consoleInput) == 4) {
+                            }
+                            else if (Integer.parseInt(consoleInput) == 4) {
                                 if (countAdded == 0) {
                                     System.out.println("no Products to save");
                                 } else {
@@ -274,8 +278,27 @@ public class Main implements ShoppingManager {
                                     saveproductsCloths();
                                     System.out.println("Successfully saved");
                                 }
-                            } else if (Integer.parseInt(consoleInput) == 5) {
+                            }
+                            else if (Integer.parseInt(consoleInput) == 5) {
 //open gui
+                                //load items to the arrays
+                                for(int i=0;i<productsInSystem.size();i++){
+                                    if(productsInSystem.get(i).type.equals("Cloth")){
+                                        CproductsInSystem.add(productsInSystem.get(i));
+                                    }
+                                    else if(productsInSystem.get(i).type.equals("Electronic")){
+                                        EproductsInSystem.add(productsInSystem.get(i));
+                                    }
+                                }
+                                SwingUtilities.invokeLater(() -> {
+                                    GUI shoppingGUI = new GUI();
+                                    shoppingGUI.initializeTable();
+                                    shoppingGUI.updateDisplayedProducts();
+                                    shoppingGUI.updateTable(); // Initialize table with data
+                                    shoppingGUI.setVisible(true);
+                                });
+x=false;z=false;
+
                             } else if ((Integer.parseInt(consoleInput) == 6)) {
                                 System.out.println("Exiting");
                                 x = false;

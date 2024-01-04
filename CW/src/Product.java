@@ -66,9 +66,21 @@ public abstract class Product {
                   stocksAvailable+":" + productPrice;
     }
     public String productDetails(){
-        return "Type: "+getType()+"\nProduct Name: "+getProductName()+ "\nStocks Available: "+getStocksAvailable()+"\nPrice: "+getProductPrice();
+    return "\nType: "
+        + getType()
+        + "\n\nProduct Name: "
+        + getProductName()
+        + "\n\nStocks Available: "
+        + getStocksAvailable()
+        + "\n\nPrice: $"
+        + getProductPrice();
     }
-
+    public String GUIinfo(){
+        return null;
+    }
+    public String cartGUIinfo(){
+        return null;
+    }
 
 
 }

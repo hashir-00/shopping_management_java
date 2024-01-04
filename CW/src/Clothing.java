@@ -38,9 +38,14 @@ public class Clothing extends Product {
                 ;
     }
     public String productDetails(){
-        return super.productDetails()+"\nColor: "+getColour()+"\nSize: "+getSize();
+    return super.productDetails() + "\n\nColor: " + getColour() + "\n\nSize: " + getSize();
     }
-
+    public String GUIinfo(){
+        return getSize()+" "+getColour();
+    }
+    public String cartGUIinfo(){
+        return getProductId()+",n"+getProductName()+","+getColour()+","+getSize();
+    }
 
 
 }

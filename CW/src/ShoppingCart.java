@@ -8,14 +8,37 @@ public class ShoppingCart {
         cartItems = new ArrayList<>();
     }
 
-    public int calculateTotalPrice() {
-        int totalPrice = 0;
+    public double calculateTotalPrice() {
+        double totalPrice = 0;
 
         for (Product product : cartItems) {
             totalPrice += product.getProductPrice();
         }
+        if (discount()){
+            return totalPrice*.8;
+        }
+        else {
+            return totalPrice;}
 
-        return totalPrice;
+    }
+    private boolean discount(){
+        int electronicCount=0;
+        int clothCount=0;
+        for(int i=0;i<cartItems.size();i++){
+            if (cartItems.get(i).getType().equals("Electronic")){
+                electronicCount+=1;
+
+            }
+            else {
+                clothCount+=1;
+            }
+        }
+        if(clothCount>=3 || electronicCount>=3 ){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public List<Product> getCartItems() {
@@ -25,6 +48,6 @@ public class ShoppingCart {
     public void addItem(Product selectedProduct) {
         cartItems.add(selectedProduct);
     }
+    }
 
-    // You may need additional methods for removing items, etc.
-}
+
