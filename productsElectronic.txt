@@ -1,2 +1,3 @@
 Electronic:1221:phone:21:210:samsung:21
 Electronic:1221:phone:5:210:samsung:21
+Electronic:123332:car:3:1200:wesr:12

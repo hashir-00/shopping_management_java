@@ -44,7 +44,7 @@ public class Clothing extends Product {
         return getSize()+" "+getColour();
     }
     public String cartGUIinfo(){
-        return getProductId()+",n"+getProductName()+","+getColour()+","+getSize();
+        return getProductId()+","+getProductName()+","+getColour()+","+getSize();
     }
 
 

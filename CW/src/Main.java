@@ -24,6 +24,7 @@ public class Main implements ShoppingManager {
     Scanner scan = new Scanner(System.in); // initiate a scanner
     boolean x = true, z = true; // for while loop
 
+    String passcode="12345";
     int counter = 0; // items inside the array
     int countAdded = 0; // items added
     String productId, prodcutName, brand, color, type;
@@ -55,7 +56,8 @@ public class Main implements ShoppingManager {
                     + user.getUsername().toUpperCase()
                     + " has been created");
 
-          } else if (new_user.toUpperCase().equals("N")) {
+          }
+          else if (new_user.toUpperCase().equals("N")) {
            startLoginConsole();
 
            /* System.out.println("Please enter Your User Name and password");
@@ -76,28 +78,16 @@ public class Main implements ShoppingManager {
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         else if (Integer.parseInt(input) == 2) {
-          while (x) {
+          System.out.print("Password: ");
+          String password=scan.next();
+          scan.nextLine(); // remove the duplication of newline
+          if(password.equals(passcode)){
+            while (x) {
+
+
+
+
             for (int i = 0; i < productsInSystem.size(); i++) {
               if (productsInSystem.get(i) != null)
                 counter++; // counter to make sure arrays is not exceeding limit
@@ -149,14 +139,14 @@ public class Main implements ShoppingManager {
                                     type = "Electronic";
 
                                     Electronics electronicsProduct =
-                                        new Electronics(
-                                            type,
-                                            productId,
-                                            prodcutName,
-                                            brand,
-                                            Integer.parseInt(stocksAvailable),
-                                            Integer.parseInt(productPrice),
-                                            Integer.parseInt(warrantyPeriod));
+                                            new Electronics(
+                                                    type,
+                                                    productId,
+                                                    prodcutName,
+                                                    brand,
+                                                    Integer.parseInt(stocksAvailable),
+                                                    Integer.parseInt(productPrice),
+                                                    Integer.parseInt(warrantyPeriod));
                                     countAdded++;
 
                                     EproductsInSystem.add(electronicsProduct);
@@ -201,14 +191,14 @@ public class Main implements ShoppingManager {
                                     type = "Cloth";
 
                                     Clothing clothProduct =
-                                        new Clothing(
-                                            type,
-                                            productId,
-                                            prodcutName,
-                                            Integer.parseInt(stocksAvailable),
-                                            Integer.parseInt(productPrice),
-                                            color,
-                                            Integer.parseInt(size));
+                                            new Clothing(
+                                                    type,
+                                                    productId,
+                                                    prodcutName,
+                                                    Integer.parseInt(stocksAvailable),
+                                                    Integer.parseInt(productPrice),
+                                                    color,
+                                                    Integer.parseInt(size));
                                     countAdded++;
 
                                     CproductsInSystem.add(clothProduct);
@@ -232,7 +222,7 @@ public class Main implements ShoppingManager {
 
                         y = false;
                       } else if (Integer.parseInt(consoleInput) > 3
-                          || Integer.parseInt(consoleInput) < 1) {
+                              || Integer.parseInt(consoleInput) < 1) {
                         System.out.println("enter a valid input in range");
                       }
                     } else {
@@ -242,7 +232,7 @@ public class Main implements ShoppingManager {
 
                 } else {
                   System.out.println(
-                      "Sorry,The product Capacity has reached" + "\nRemove an item to proceed");
+                          "Sorry,The product Capacity has reached" + "\nRemove an item to proceed");
                 }
 
               } else if (Integer.parseInt(consoleInput) == 2) {
@@ -256,12 +246,12 @@ public class Main implements ShoppingManager {
 
                   consoleInput = scan.next();
                   if (inputValidator(consoleInput)
-                      && Integer.parseInt(consoleInput) - 1 < productsInSystem.size()
-                      && Integer.parseInt(consoleInput) != 0) {
+                          && Integer.parseInt(consoleInput) - 1 < productsInSystem.size()
+                          && Integer.parseInt(consoleInput) != 0) {
                     Product temp = productsInSystem.get(Integer.parseInt(consoleInput) - 1);
 
                     System.out.println(
-                        temp.getType() + " product with id:" + temp.getProductId() + " removed");
+                            temp.getType() + " product with id:" + temp.getProductId() + " removed");
                     if (temp.getType().equals("Electronic")) {
                       removeE(temp.toString()); // removing it from the file
                     } else if (temp.getType().equals("Cloth")) {
@@ -272,7 +262,7 @@ public class Main implements ShoppingManager {
                     }
 
                     productsInSystem.remove(
-                        Integer.parseInt(consoleInput) - 1); // removing it from the array
+                            Integer.parseInt(consoleInput) - 1); // removing it from the array
 
                   } else if (inputValidator(consoleInput) && Integer.parseInt(consoleInput) == 0) {
                     System.out.println("please enter a existing value");
@@ -300,9 +290,9 @@ public class Main implements ShoppingManager {
                 }
               } else if (Integer.parseInt(consoleInput) == 5) {
                 // open login gui
-            startLoginConsole();
+                startLoginConsole();
 
-                  break;
+                break;
 
               } else if ((Integer.parseInt(consoleInput) == 6)) {
                 System.out.println("Exiting");
@@ -318,12 +308,19 @@ public class Main implements ShoppingManager {
             } else {
               System.out.println("enter a valid integer");
             }
+          }}
+          else {
+            System.out.println("password error");
+
           }
 
-        } else {
+
+        }
+        else {
           System.out.println("enter a valid range");
         }
-      } else {
+      }
+      else {
         System.out.println("enter a valid Integer input");
       }
     }
@@ -540,6 +537,7 @@ public class Main implements ShoppingManager {
 
   }
   public static void startLoginConsole(){
+
     SwingUtilities.invokeLater(
             () -> {
               LoginGUI login=new LoginGUI();
