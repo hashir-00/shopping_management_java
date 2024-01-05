@@ -38,6 +38,7 @@ public class Main implements ShoppingManager {
       String input = scan.nextLine();
       if (inputValidator(input)) {
         if (Integer.parseInt(input) == 1) {
+
           System.out.println("Are you a new user?\nY\nN");
           String new_user = scan.nextLine();
           if (new_user.toUpperCase().equals("Y")) {
@@ -55,28 +56,52 @@ public class Main implements ShoppingManager {
                     + " has been created");
 
           } else if (new_user.toUpperCase().equals("N")) {
-            System.out.println("Please enter Your User Name and password");
+            SwingUtilities.invokeLater(
+                    () -> {
+                      LoginGUI login=new LoginGUI();
+                      login.setVisible(true);
+
+                    });
+
+           /* System.out.println("Please enter Your User Name and password");
             System.out.print("username:");
             String username = scan.nextLine();
             System.out.print("password:");
-            String password = scan.nextLine();
+            String password = scan.nextLine();*/
 
-            User user = new User(username, password);
 
-            if (user.checkUsername_password(username.toUpperCase(), password)) {
-                startConsole();
-                break;
-            }
-            else {
-              System.out.println("Sorry your username or password is incorrect ");
-            }
+
+
+
 
           } else {
             System.out.println("please enter a valid answer");
           }
           // open console
 
-        } else if (Integer.parseInt(input) == 2) {
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        else if (Integer.parseInt(input) == 2) {
           while (x) {
             for (int i = 0; i < productsInSystem.size(); i++) {
               if (productsInSystem.get(i) != null)
@@ -500,6 +525,8 @@ public class Main implements ShoppingManager {
   }
 
   public static void startConsole() {
+
+
     for (int i = 0; i < productsInSystem.size(); i++) {
       if (productsInSystem.get(i).type.equals("Cloth")) {
         CproductsInSystem.add(productsInSystem.get(i));
