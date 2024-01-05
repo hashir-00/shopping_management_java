@@ -325,4 +325,6 @@ public class GUI extends JFrame {
         // Update the text of the shopping cart button to show the number of items in the cart
         viewShoppingCartButton.setText("Shopping Cart (" + shoppingCart.getCartItems().size() + ")");
     }
+
+
 }
