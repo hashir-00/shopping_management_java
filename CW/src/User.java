@@ -9,11 +9,13 @@ public class User {
     private String password;
 
     private final static File userFile = new File("UserProfile.txt");//creating a file
-    HashMap<String,String> usersList=new HashMap<>();
+    private final HashMap<String,String> usersList=new HashMap<>();
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+
+
 
     }
 
@@ -90,8 +92,6 @@ public class User {
         return false;
     }
 
-
-
     private void loadUserdetails(){
     BufferedReader br = null;
     try {
@@ -110,14 +110,15 @@ public class User {
             // split the line by :
             String[] parts = line.split(":");
 
-            // first part is name, second is number
+            // first part is name, second is password
             String name = parts[0].trim();
-            String number = parts[1].trim();
+            String password= parts[1].trim();
 
-            // put name, number in HashMap if they are
-            // not empty
-            if (!name.equals("") && !number.equals(""))
-                usersList.put(name, number);
+
+
+
+            if (!name.equals("") && !password.equals(""))
+                usersList.put(name, password);
         }
     }
     catch (Exception e) {
@@ -137,4 +138,6 @@ public class User {
 
 
 }
+
+
 }

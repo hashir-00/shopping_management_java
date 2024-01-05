@@ -56,12 +56,7 @@ public class Main implements ShoppingManager {
                     + " has been created");
 
           } else if (new_user.toUpperCase().equals("N")) {
-            SwingUtilities.invokeLater(
-                    () -> {
-                      LoginGUI login=new LoginGUI();
-                      login.setVisible(true);
-
-                    });
+           startLoginConsole();
 
            /* System.out.println("Please enter Your User Name and password");
             System.out.print("username:");
@@ -304,8 +299,8 @@ public class Main implements ShoppingManager {
                   System.out.println("Successfully saved");
                 }
               } else if (Integer.parseInt(consoleInput) == 5) {
-                // open gui
-                startConsole();
+                // open login gui
+            startLoginConsole();
 
                   break;
 
@@ -524,7 +519,7 @@ public class Main implements ShoppingManager {
     }
   }
 
-  public static void startConsole() {
+  public static void startConsole(User user) {
 
 
     for (int i = 0; i < productsInSystem.size(); i++) {
@@ -536,13 +531,21 @@ public class Main implements ShoppingManager {
     }
     SwingUtilities.invokeLater(
         () -> {
-          GUI shoppingGUI = new GUI();
+          GUI shoppingGUI = new GUI(user);
           shoppingGUI.initializeTable();
           shoppingGUI.updateDisplayedProducts();
           shoppingGUI.updateTable(); // Initialize table with data
           shoppingGUI.setVisible(true);
         });
 
+  }
+  public static void startLoginConsole(){
+    SwingUtilities.invokeLater(
+            () -> {
+              LoginGUI login=new LoginGUI();
+              login.setVisible(true);
+
+            });
   }
 }
 

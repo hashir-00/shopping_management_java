@@ -19,7 +19,9 @@ public class GUI extends JFrame {
     private ArrayList<Product> displayedProducts;
     private final ShoppingCart shoppingCart;
 
-    public GUI() {
+
+
+    public GUI(User user) {
         setTitle("Shopping GUI");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,21 +100,24 @@ public class GUI extends JFrame {
         });
         productTable.getSelectionModel().addListSelectionListener(e -> displaySelectedProductDetails());
 
-        addToCartButton.addActionListener(e -> addToShoppingCart());
-        viewShoppingCartButton.addActionListener(e -> showShoppingCartDialog());
+        addToCartButton.addActionListener(e -> addToShoppingCart(user));
+        viewShoppingCartButton.addActionListener(e -> showShoppingCartDialog(user));
 
         // Initialize shopping cart
         shoppingCart = new ShoppingCart();
     }
 
     //shopping cart
-    private void showShoppingCartDialog() {
+    private void showShoppingCartDialog(User user) {
         // Create a new JFrame for the shopping cart
         JFrame cartFrame = new JFrame("Shopping Cart");
-        cartFrame.setSize(400, 300);
+        cartFrame.setSize(400, 250);
 
         // Create a JPanel for the shopping cart content
         JPanel cartPanel = new JPanel(new BorderLayout());
+
+        // Panel for the scrollable table
+        JPanel tablePanel = new JPanel(new BorderLayout());
 
         // Create a JTable to display the shopping cart items
         JTable cartTable = new JTable();
@@ -135,24 +140,46 @@ public class GUI extends JFrame {
         }
 
         JScrollPane cartTableScrollPane = new JScrollPane(cartTable);
-        cartPanel.add(cartTableScrollPane, BorderLayout.CENTER);
+        tablePanel.add(cartTableScrollPane, BorderLayout.CENTER);
+        cartTableScrollPane.setPreferredSize(new Dimension(cartFrame.getWidth(), 100)); // Adjust height if needed
+
+        // Panel to display the final price
+        JPanel pricePanel = new JPanel(new BorderLayout());
+        JPanel closePanel = new JPanel(new BorderLayout());
 
 
-        // Display the final price
-        JTextField finalPriceLabel =
-                new JTextField("Final Price: $" + shoppingCart.calculateTotalPrice());
-        cartPanel.add(finalPriceLabel,  BorderLayout.PAGE_END);
+        JLabel firstdiscountlabel = new JLabel("first time Discount applied: -$"+shoppingCart.getFirst_purchase_discount());
+        JLabel sameItemdiscountlabel = new JLabel("Same item Discount applied: -$"+shoppingCart.getItem_discount_amount());
+        JLabel finalPriceLabel = new JLabel("Final Price: $" + shoppingCart.calculateTotalPrice(user.getUsername().toUpperCase()));
+
+        pricePanel.add(firstdiscountlabel, BorderLayout.NORTH);
+        pricePanel.add(sameItemdiscountlabel,BorderLayout.CENTER);
+        pricePanel.add(finalPriceLabel,BorderLayout.SOUTH);
+
 
         // Create a JButton to close the shopping cart dialog
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                for (Product product : shoppingCart.getCartItems()) {
+                    shoppingCart.savePurchaseHistory(user.getUsername(), product.getProductName());
+                }
                 cartFrame.dispose();
+                System.exit(0);
             }
         });
 
-        cartPanel.add(closeButton, BorderLayout.SOUTH);
+        // Add the "Close" button below the final price label
+       closePanel.add(closeButton, BorderLayout.SOUTH);
+
+        // Add tablePanel (scrollable table) to cartPanel
+        cartPanel.add(tablePanel, BorderLayout.NORTH);
+
+        // Add pricePanel (final price label and close button) to cartPanel
+        cartPanel.add(pricePanel, BorderLayout.CENTER);
+
+        cartPanel.add(closePanel,BorderLayout.SOUTH);
 
         // Add the cartPanel to the cartFrame
         cartFrame.add(cartPanel);
@@ -160,6 +187,7 @@ public class GUI extends JFrame {
         // Set the visibility of the shopping cart dialog
         cartFrame.setVisible(true);
     }
+
     //display products
     void updateDisplayedProducts() {
         String selectedType = productTypeDropdown.getSelectedItem().toString();
@@ -182,7 +210,7 @@ public class GUI extends JFrame {
                         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
                         Product product = displayedProducts.get(row);
-                        if (product.getStocksAvailable() < 3) {
+                        if (product.getStocksAvailable() <=3) {
                             c.setForeground(Color.RED);
                         } else {
                             c.setForeground(table.getForeground());
@@ -229,7 +257,7 @@ public class GUI extends JFrame {
                     table, value, isSelected, hasFocus, row, column);
 
               Product product = displayedProducts.get(row);
-              if (product.getStocksAvailable() < 3) {
+              if (product.getStocksAvailable() <= 3) {
                   c.setForeground(Color.RED);
               } else {
                   c.setForeground(table.getForeground());
@@ -286,7 +314,7 @@ public class GUI extends JFrame {
         }
     }
 
-    private void addToShoppingCart() {
+    private void addToShoppingCart(User user) {
         int selectedRow = productTable.getSelectedRow();
 
         if (selectedRow >= 0 && selectedRow < displayedProducts.size()) {
@@ -302,6 +330,7 @@ public class GUI extends JFrame {
             }
             // Update the shopping cart button text to reflect the number of items in the cart
             updateShoppingCartButtonText();
+
             updateTable();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a product.");

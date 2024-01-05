@@ -38,13 +38,14 @@ class LoginGUI extends JFrame {
           User user = new User(enteredUsername, new String(enteredPassword));
           if (user.checkUsername_password(
               enteredUsername.toUpperCase(), new String(enteredPassword))) {
-            Main.startConsole();
+            Main.startConsole(user);
               dispose();
           } else {
               showErrorMessage("Sorry, your username or password is incorrect");
           }
         });
-    } private void showErrorMessage(String message) {
+    }
+    private void showErrorMessage(String message) {
         if (errorMsgPanel == null) {
             errorMsgPanel = new JPanel(new BorderLayout());
             errorMsgPanel.setBorder(new EmptyBorder(10, 10, 10, 10));

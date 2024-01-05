@@ -1,2 +1,2 @@
 Electronic:1221:phone:21:210:samsung:21
-Electronic:1221:phone:1:210:samsung:21
+Electronic:1221:phone:5:210:samsung:21
