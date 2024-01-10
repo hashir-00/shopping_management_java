@@ -9,8 +9,8 @@ public class Main  {
 
 
   // File paths for electronic and clothing products
-  static final File fileElectronic = new File("productsElectronic.txt"); // creating a file
-  static final File fileCloth = new File("productsCLoth.txt"); // creating a file
+  static final File fileElectronic = new File("productsElectronic.txt");
+  static final File fileCloth = new File("productsCLoth.txt");
 
   //array list for all products
   static ArrayList<Product> productsInSystem = new ArrayList<>();
@@ -23,6 +23,11 @@ public class Main  {
 
     Scanner scan = new Scanner(System.in); // initiate a scanner
     boolean x = true, z = true; // for while loop
+    //Z=main menue loop
+    //X=console menu loop
+    //Y=Add product loop
+
+
 
     String passcode="12345";
     int counter = 0; // items inside the array
@@ -73,10 +78,6 @@ public class Main  {
           scan.nextLine(); // remove the duplication of newline
           if(password.equals(passcode)){
             while (x) {
-
-
-
-
             for (int i = 0; i < productsInSystem.size(); i++) {
               if (productsInSystem.get(i) != null)
                 counter++; // counter to make sure arrays is not exceeding limit
@@ -95,6 +96,7 @@ public class Main  {
                   boolean y = true;
 
                   while (y) {
+                    //M,N,L=integer input loops
                     boolean m = true, n = true, l = true;
                     AddProductDisplayConsole();
                     System.out.print("\nselect option:");
@@ -316,6 +318,7 @@ public class Main  {
     }
   }
 
+  //console menu display
   public static void displayConsole() {
     System.out.println(
         "\n\n\n"
@@ -329,6 +332,7 @@ public class Main  {
             + "\n6.Exit");
   }
 
+  //add product display
   public static void AddProductDisplayConsole() {
     System.out.println(
         "\n\n1.Add an Electronic Product " + "\n2.Add a Clothing Product" + "\n3.Exit to main ");
@@ -347,7 +351,7 @@ public class Main  {
         productsInSystem.add(EproductsInSystem.get(i));
         pw.println(EproductsInSystem.get(i).toString());
       }
-
+      //clearing the electrnoic product array to remove duplicate entries
       EproductsInSystem.clear();
 
       pw.close();
@@ -369,6 +373,7 @@ public class Main  {
         productsInSystem.add(CproductsInSystem.get(i));
         pw.println(CproductsInSystem.get(i).toString());
       }
+      //clearing the cloth product array to remove duplicate entries
       CproductsInSystem.clear();
 
       pw.close();
@@ -430,6 +435,7 @@ public class Main  {
     }
   }
 
+  //product list display
   public static void productList() {
 
     for (int i = 0; i < productsInSystem.size(); i++) {
@@ -437,6 +443,7 @@ public class Main  {
     }
   }
 
+  //validator
   public static boolean inputValidator(String input) {
 
     boolean isInt = false;
@@ -451,6 +458,7 @@ public class Main  {
     return isInt;
   }
 
+  //product removal from file
   public static void removeE(String text) {
 
     try {
@@ -506,9 +514,11 @@ public class Main  {
     }
   }
 
+
+ //gui
   public static void startConsole(User user) {
 
-
+//add the products to prodcut array to display in GUI
     for (int i = 0; i < productsInSystem.size(); i++) {
       if (productsInSystem.get(i).type.equals("Cloth")) {
         CproductsInSystem.add(productsInSystem.get(i));

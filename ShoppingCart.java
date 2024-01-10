@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 public class ShoppingCart {
-    private List<Product> cartItems;
-    private int count=0;
-    private HashMap<String,String> purchaseHistory= new HashMap<>();
+    private final List<Product> cartItems;
 
+
+    //hashmap to save the user history in pairs of name and product name
+    private final HashMap<String,String> purchaseHistory= new HashMap<>();
 
     private double item_discount_amount=0;
     private double first_purchase_discount=0;
@@ -34,18 +35,14 @@ public class ShoppingCart {
             item_discount_amount= totalPrice*.2;
             first_purchase_discount=0;
             return totalPrice*.8;
-
         }
         else if(firstPurchaseDiscount(user)){
             first_purchase_discount= totalPrice*.1;
             item_discount_amount=0;
             return totalPrice *.9;
-
         }
-
         else {
             return totalPrice;}
-
     }
     private boolean discount(){
         int electronicCount=0;
@@ -74,11 +71,7 @@ public class ShoppingCart {
         if (username.equals(user_purchase_history.getKey())){
             return false;
         }
-
     }return true;
-
-
-
     }
 
     public List<Product> getCartItems() {
@@ -97,6 +90,7 @@ public class ShoppingCart {
         cartItems.add(selectedProduct);
 
     }
+
 
     public void savePurchaseHistory(String username,String productName){
         BufferedWriter bf = null;
@@ -126,6 +120,7 @@ public class ShoppingCart {
                 bf.close();
             }
             catch (Exception e) {
+                throw new RuntimeException(e);
             }
 
         }
@@ -148,7 +143,7 @@ public class ShoppingCart {
                 // split the line by :
                 String[] parts = line.split(":");
 
-                // first part is name, second is pname
+                // first part is name, second is product name
                 String name = parts[0].trim();
                 String pname= parts[1].trim();
 
@@ -169,7 +164,7 @@ public class ShoppingCart {
                     br.close();
                 }
                 catch (Exception e) {
-                };
+                }
             }
         }
 
